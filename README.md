@@ -1,3 +1,3 @@
-# React + TypeScript + Vite
+# Disney Characters
 
-Disney Characters
+React + TypeScript + Vite
