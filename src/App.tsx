@@ -1,12 +1,15 @@
 import React from 'react';
 import { Outlet } from 'react-router';
-import { GlobalStyles } from './styles/GlobalStyles';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles, theme } from '@/styles';
 
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <Outlet />
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Outlet />
+      </ThemeProvider>
     </>
   );
 }
