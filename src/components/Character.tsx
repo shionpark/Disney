@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ interface RouteParams {
 }
 
 interface RouteState {
-  name: string | undefined;
+  name: string;
 }
 
 const Title = styled.h1`
@@ -22,16 +22,39 @@ const Loader = styled.h1`
   color: ${(props) => props.theme.accentColor};
 `;
 
-const Character = () => {
-  const [loading, setLoading] = useState(false);
-  const { id } = useParams<RouteParams>();
-  const { state } = useLocation<RouteState>();
+interface ICharacter {
+  id: number;
+  films: string;
+  name: string;
+  imageUrl: string;
+  sourceUrl: string;
+}
 
-  return (
-    <>
-      <Title>{state ? state : <Loader />}</Title>
-    </>
-  );
+const Character = () => {
+  const [loading, setLoading] = useState(true);
+  const [character, setCharacter] = useState<ICharacter[]>([]);
+
+  const { id } = useParams<RouteParams>();
+  const location = useLocation();
+  const state = (location.state as { name?: string }) || {};
+
+  console.log(state);
+
+  const getData = async () => {
+    const data = await (
+      await fetch(`https://disney_api.nomadcoders.workers.dev/characters/${id}`)
+    ).json();
+    setCharacter(data);
+    setLoading(false);
+  };
+
+  console.log(character);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return <>{loading ? <Loader /> : <Title>{state ? state.name : <Loader />}</Title>}</>;
 };
 
 export default Character;

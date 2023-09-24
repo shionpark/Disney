@@ -52,7 +52,7 @@ const Characters = () => {
           <Container>
             {characters.map((character) => (
               <ul key={character.id}>
-                <Link to={`/characters/${character.id}`} state={character.name}>
+                <Link to={`/characters/${character.id}`} state={{ name: character.name }}>
                   <img src={character.imageUrl} />
                 </Link>
                 <li>{character.name}</li>
