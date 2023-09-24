@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router';
+import { Character } from '@/components';
 
 interface RouteParams {
   [key: string]: string;
@@ -10,7 +11,7 @@ const Detail = () => {
   console.log(id);
   return (
     <>
-      <h1>Detail</h1>
+      <Character />
     </>
   );
 };

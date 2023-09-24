@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 interface ICharacters {
@@ -40,6 +41,7 @@ const Characters = () => {
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <>
       {loading ? (
@@ -50,8 +52,10 @@ const Characters = () => {
           <Container>
             {characters.map((character) => (
               <ul key={character.id}>
+                <Link to={`/characters/${character.id}`} state={character.name}>
+                  <img src={character.imageUrl} />
+                </Link>
                 <li>{character.name}</li>
-                <img src={character.imageUrl} />
               </ul>
             ))}
           </Container>
