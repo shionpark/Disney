@@ -2,12 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router';
 
 interface RouteParams {
-  id: string;
+  [key: string]: string;
 }
 
 const Detail = () => {
   const { id } = useParams<RouteParams>();
-  //   const { id } = useParams<{ id: string }>();
   console.log(id);
   return (
     <>
