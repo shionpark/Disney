@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { fetchCharacters } from '@/utils/api';
 import { ICharacters } from '@/types';
-import { Loader, Container, CharacterItem, Img, SubTitle } from './Characters.styles';
+import { Loader, Container, CharacterItem, Img, SubTitle } from '../styles';
 
 const Characters = () => {
   const { isLoading, data: characters } = useQuery<ICharacters[]>(['characters'], fetchCharacters);
