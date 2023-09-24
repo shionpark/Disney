@@ -1,62 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { useQuery } from '@tanstack/react-query';
 
-interface ICharacters {
-  id: number;
-  name: string;
-  imageUrl: string;
-}
-
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 40px;
-`;
-
-const Title = styled.h1`
-  font-size: 48px;
-  text-align: center;
-  color: ${(props) => props.theme.accentColor};
-`;
-
-const Loader = styled.h1`
-  font-size: 32px;
-  text-align: center;
-  color: ${(props) => props.theme.accentColor};
-`;
+import { fetchCharacters } from '@/utils/api';
+import { ICharacters } from '@/types';
+import { Loader, Container, CharacterItem, Img, SubTitle } from './Characters.styles';
 
 const Characters = () => {
-  const [characters, setCharacters] = useState<ICharacters[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const getData = async () => {
-    const response = await fetch('https://disney_api.nomadcoders.workers.dev/characters');
-    const json = await response.json();
-    setCharacters(json.slice(0, 100));
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+  const { isLoading, data: characters } = useQuery<ICharacters[]>(['characters'], fetchCharacters);
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Title>Characters</Title>
           <Container>
-            {characters.map((character) => (
-              <ul key={character.id}>
-                <Link to={`/characters/${character.id}`} state={{ name: character.name }}>
-                  <img src={character.imageUrl} />
-                </Link>
-                <li>{character.name}</li>
-              </ul>
+            {characters?.slice(0, 100).map((character) => (
+              <Link to={`/characters/${character.id}`} state={{ name: character.name }}>
+                <CharacterItem key={character.id}>
+                  <Img src={character.imageUrl || '/images/default.png'} alt={character.name} />
+                  <SubTitle>{character.name}</SubTitle>
+                </CharacterItem>
+              </Link>
             ))}
           </Container>
         </>
