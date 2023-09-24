@@ -3,14 +3,27 @@ import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchCharacter } from '../utils/api';
-import { IParams, ICharacter } from '@/types';
-import { Loader } from '../styles';
+import { ICharacter } from '@/types';
+import { Loader, Img, Title } from '../styles';
+
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+const Button = styled.a`
+  background-color: ${(props) => props.theme.accentColor};
+`;
 
 const Character = () => {
-  const { id } = useParams<IParams>();
+  const { id } = useParams() as { id: string };
   const { isLoading, data } = useQuery<ICharacter>(['character', id], () =>
     fetchCharacter(Number(id))
   );
+  console.log(id);
 
   return (
     <>
@@ -18,12 +31,12 @@ const Character = () => {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <h1>{data?.name}</h1>
-          <div>
-            <img src={data?.imageUrl} alt={data?.name} />
-            <h2>{data?.name}</h2>
+          <Container>
+            <Img src={data?.imageUrl} alt={data?.name} />
+            <Title>{data?.name}</Title>
             <p>Films: {data?.films}</p>
-          </div>
+            <Button href={data?.sourceUrl}>More</Button>
+          </Container>
         </>
       )}
     </>

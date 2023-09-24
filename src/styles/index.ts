@@ -7,6 +7,7 @@ export const Title = styled.h1`
   font-size: 52px;
   text-align: center;
   color: ${(props) => props.theme.accentColor};
+  margin: 20px;
 `;
 
 export const Container = styled.div`
@@ -47,4 +48,22 @@ export const Img = styled.img`
 
 export const SubTitle = styled.span`
   font-size: 20px;
+`;
+
+export const FooterInner = styled.footer`
+  text-align: center;
+  opacity: 0.5;
+  margin-top: 40px;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
 `;
