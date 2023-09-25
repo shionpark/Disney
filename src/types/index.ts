@@ -6,7 +6,7 @@ export interface ICharacters {
 
 export interface ICharacter {
   id: number;
-  films: string;
+  films: string[];
   name: string;
   imageUrl: string;
   sourceUrl: string;
